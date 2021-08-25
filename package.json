@@ -19,6 +19,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "graphql": "^15.5.1"
   }
 }
