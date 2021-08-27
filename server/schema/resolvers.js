@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User } = require("../models");
+const { User, Book } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
@@ -27,7 +27,7 @@ const resolvers = {
 
       const correctPassword = await profile.isCorrectPassword(correctPassword);
 
-      if (!correctPw) {
+      if (!correctPassword) {
         throw new AuthenticationError("Incorrect password");
       }
 
@@ -43,11 +43,11 @@ const resolvers = {
     },
 
     // third argument to access data in the context
-    saveBook: async (parent, { bookInput }, context) => {
+    saveBook: async (parent, args, context) => {
       if (context.user) {
         const updatedProfile = await User.findOneAndUpdate(
           { _id: context.profile._id },
-          { $addToSet: { savedBooks: bookInput } },
+          { $addToSet: { savedBooks: args.input } },
           { new: true }
         );
         return updatedProfile;
@@ -56,11 +56,11 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    removeBook: async (parent, { bookId }, context) => {
+    removeBook: async (parent, args, context) => {
       if (context.user) {
         const updatedProfile = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedBooks: { bookId: bookId } } },
+          { $pull: { savedBooks: { bookId: args.bookId } } },
           { new: true }
         );
         return updatedUser;
