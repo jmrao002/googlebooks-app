@@ -3,23 +3,31 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
-  "homepage": "https://jmrao002.github.io/googlebooks-app",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd server && npm start",
+    "start:prod": "cd server && npm start",
+    "start:dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "heroku-postbuild": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@work.github.com:jmrao002/googlebooks-app.git"
   },
   "keywords": [],
   "author": "Michael Rao",
-  "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^5.1.0"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jmrao002/Book-Search-Engine/issues"
   },
+  "homepage": "https://github.com/jmrao002/googlebooks-app#readme",
   "dependencies": {
-    "gh-pages": "^3.2.3",
-    "graphql": "^15.5.1"
+    "apollo-server-express": "^3.3.0",
+    "if-env": "^1.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }
