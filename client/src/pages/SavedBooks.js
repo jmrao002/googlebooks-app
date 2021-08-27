@@ -19,7 +19,7 @@ const SavedBooks = () => {
 
   const userData = data?.me || [];
 
-  // function to delete books with id from db as param
+  // function to delete book with id as param
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
