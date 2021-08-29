@@ -7,6 +7,8 @@ import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 
 const SignupForm = () => {
+  // invoke useMutation hook to return a promise-based function and data about the ADD_USER mutation
+  const [addUser] = useMutation(ADD_USER);
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
@@ -18,16 +20,13 @@ const SignupForm = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
-  // invoke useMutation hook to return a promise-based function and data about the ADD_USER mutation
-  const [addUser] = useMutation(ADD_USER);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
 
     // use try/catch since it's async
     try {
@@ -37,8 +36,8 @@ const SignupForm = () => {
       });
 
       Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       setShowAlert(true);
     }
 
