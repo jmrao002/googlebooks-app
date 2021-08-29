@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Jumbotron,
   Container,
@@ -7,6 +7,7 @@ import {
   Button,
 } from "react-bootstrap";
 
+import { getMe, deleteBook } from "../utils/API";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 import { useMutation, useQuery } from "@apollo/react-hooks";
@@ -14,12 +15,11 @@ import { GET_ME } from "../utils/queries";
 import { REMOVE_BOOK } from "../utils/mutations";
 
 const SavedBooks = () => {
-  const { data } = useQuery(GET_ME);
+  const { loading, data } = useQuery(GET_ME);
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   const userData = data?.me || [];
 
-  // function to delete book with id as param
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -32,12 +32,15 @@ const SavedBooks = () => {
         variables: { bookId },
       });
 
-      // remove book from localstorage
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }
   };
+
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
 
   return (
     <>
