@@ -9,6 +9,7 @@ import ApolloClient from "apollo-boost";
 const client = new ApolloClient({
   request: (operation) => {
     const token = localStorage.getItem("id_token");
+
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : "",
@@ -20,17 +21,14 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    // makes every request work with the Apollo Server
-    <ApolloProvider>
+    <ApolloProvider client={client}>
       <Router>
-        <div>
           <Navbar />
           <Switch>
             <Route exact path="/" component={SearchBooks} />
             <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Switch>
-        </div>
       </Router>
     </ApolloProvider>
   );
