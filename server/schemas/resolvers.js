@@ -2,18 +2,21 @@ const { User, Book } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
+// create the functions that fulfill the queries defined in typeDefs
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
+      // check if there is a matching user
       if (context.user) {
+        // check data saved against the user
         const userData = await User.findOne({})
           .select("-__v -password")
           .populate("books");
-
+        // get and return the user's saved books
         return userData;
       }
 
-      throw new AuthenticationError("Not logged in");
+      throw new AuthenticationError("You need to log in to see this page!");
     },
   },
 

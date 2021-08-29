@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Jumbotron,
   Container,
@@ -6,18 +6,19 @@ import {
   Card,
   Button,
 } from "react-bootstrap";
-
+import { useMutation, useQuery } from "@apollo/react-hooks";
+// import the query we're going to execute
+import { GET_ME } from "../utils/queries";
+import { REMOVE_BOOK } from "../utils/mutations";
 import { getMe, deleteBook } from "../utils/API";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { GET_ME } from "../utils/queries";
-import { REMOVE_BOOK } from "../utils/mutations";
 
 const SavedBooks = () => {
+  // execute the query on component load
   const { loading, data } = useQuery(GET_ME);
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
-
+// check to see if data is there and if not then return an empty array
   const userData = data?.me || [];
 
   const handleDeleteBook = async (bookId) => {
@@ -39,7 +40,7 @@ const SavedBooks = () => {
   };
 
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <h2>Loading...</h2>;
   }
 
   return (
