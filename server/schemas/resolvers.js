@@ -1,10 +1,9 @@
-const { AuthenticationError } = require("apollo-server-express");
 const { User, Book } = require("../models");
+const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // add context to the query to retrieve the logged in user without needing to search for them
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({})
@@ -13,59 +12,63 @@ const resolvers = {
 
         return userData;
       }
-      throw new AuthenticationError("You need to be logged in!");
+
+      throw new AuthenticationError("Not logged in");
     },
   },
 
   Mutation: {
-    login: async (parent, { email, password }) => {
-      const profile = await User.findOne({ email });
-
-      if (!profile) {
-        throw new AuthenticationError("No profile with this email found!");
-      }
-
-      const correctPassword = await profile.isCorrectPassword(correctPassword);
-
-      if (!correctPassword) {
-        throw new AuthenticationError("Incorrect password");
-      }
-
-      const token = signToken(profile);
-      return { token, profile };
-    },
-
     addUser: async (parent, args) => {
-      const profile = await User.create(args);
-      const token = signToken(profile);
+      const user = await User.create(args);
+      const token = signToken(user);
 
-      return { token, profile };
+      return { token, user };
     },
 
-    // third argument to access data in the context
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
+
     saveBook: async (parent, args, context) => {
       if (context.user) {
-        const updatedProfile = await User.findOneAndUpdate(
-          { _id: context.profile._id },
+        //   const savedBook = await Book.create({ ...args, username: context.user.username });
+
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
           { $addToSet: { savedBooks: args.input } },
           { new: true }
         );
-        return updatedProfile;
+
+        return updatedUser;
       }
-      // if trying to save a book when not logged in, throw an error
+
       throw new AuthenticationError("You need to be logged in!");
     },
 
     removeBook: async (parent, args, context) => {
       if (context.user) {
-        const updatedProfile = await User.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { savedBooks: { bookId: args.bookId } } },
           { new: true }
         );
+
         return updatedUser;
       }
-      // if trying to remove a book when not logged in, throw an error
+
       throw new AuthenticationError("You need to be logged in!");
     },
   },
