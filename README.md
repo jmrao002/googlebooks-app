@@ -12,7 +12,7 @@ A web application that allows users to search for books using the Google Books A
 
 This application allows users to search for book titles using the Google Books API. Users can save individual book results to a "Saved" page, where they can, if logged in, reference their saved material at a later time. It is also possible in this application to delete books from the "Saved" page.
 
-![app screenshot](/Users/mrao/Code/googlebooks-app/client/public/screenshot.png "App Screenshot")
+![app screenshot](https://raw.githubusercontent.com/jmrao002/googlebooks-app/main/client/public/screenshot.png "App Screenshot")
 
 # Setup/Installation Requirements
 
