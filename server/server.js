@@ -39,7 +39,3 @@ db.once("open", () => {
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
 });
-
-process.on("uncaughtException", function (err) {
-  console.log("Caught exception: " + err);
-});
