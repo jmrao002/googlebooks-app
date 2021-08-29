@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jmrao002/googlebooks-app#readme",
   "dependencies": {
+    "graphql": "^15.5.1",
     "if-env": "^1.0.4"
   },
   "devDependencies": {
