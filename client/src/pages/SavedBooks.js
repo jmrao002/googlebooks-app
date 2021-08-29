@@ -7,10 +7,10 @@ import {
   Button,
 } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-// import the query we're going to execute
+// import the query we're going to execute and the mutation
 import { GET_ME } from "../utils/queries";
 import { REMOVE_BOOK } from "../utils/mutations";
-import { getMe, deleteBook } from "../utils/API";
+
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
@@ -34,8 +34,8 @@ const SavedBooks = () => {
       });
 
       removeBookId(bookId);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
