@@ -5,14 +5,13 @@ const typeDefs = gql`
     _id: ID!
     bookId: String
     authors: [String]
-    # authors: String
     description: String
     title: String
     image: String
     link: String
   }
   type User {
-    _id: ID!
+    _id: ID
     username: String
     email: String
     bookCount: Int
@@ -36,10 +35,9 @@ const typeDefs = gql`
     removeBook(bookId: ID!): User
   }
   type Auth {
-    token: ID!
+    token: ID
     user: User
   }
 `;
 
-// export the typeDefs
 module.exports = typeDefs;
