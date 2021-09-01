@@ -17,6 +17,7 @@ export const LOGIN_USER = gql`
           image
           link
         }
+      }
     }
   }
 `;

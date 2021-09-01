@@ -13,7 +13,7 @@ const LoginForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (e) => {
-    const { name, value } = encodeURI.target;
+    const { name, value } = e.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
