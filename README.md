@@ -18,7 +18,7 @@ This application allows users to search for book titles using the Google Books A
 
 Clone this repository to VS code. Open an integrated terminal from the googlebooks-app folder, and enter "npm run develop".
 
-Alternatively, the webpage can be accessed on Heroku at https://fathomless-sierra-89137.herokuapp.com/.
+Alternatively, the webpage can be accessed on Heroku at https://mrao-googlebooks-app.herokuapp.com/.
 
 # Known Bugs
 
